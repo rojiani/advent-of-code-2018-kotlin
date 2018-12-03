@@ -1,9 +1,9 @@
 package day02.first
 
-import common.INPUTS_DIR
+import common.inputFilenameForDay
 import java.io.File
 
-const val DAY_2_INPUT_FILENAME = "$INPUTS_DIR/day_02_input.txt"
+private val DAY_2_INPUT_FILENAME = inputFilenameForDay(2)
 
 /**
  * [Day 2](https://adventofcode.com/2018/day/2) - Part 1

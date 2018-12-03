@@ -1,6 +1,6 @@
 package day02.second
 
-import day02.first.DAY_2_INPUT_FILENAME
+import common.inputFilenameForDay
 import java.io.File
 
 /**
@@ -9,7 +9,7 @@ import java.io.File
  * Time complexity: `O(n^3)`
  */
 fun findCommonIDLetters(): String {
-    val boxIDs = File(DAY_2_INPUT_FILENAME).readLines()
+    val boxIDs = File(inputFilenameForDay(2)).readLines()
 
     for (i in 0 until boxIDs.lastIndex) {
         for (j in (i + 1)..boxIDs.lastIndex) {
