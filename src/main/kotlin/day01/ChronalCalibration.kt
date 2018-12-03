@@ -3,7 +3,7 @@ package day01
 import common.INPUTS_DIR
 import java.io.File
 
-const val INPUT_FILE_DAY_1 = "$INPUTS_DIR/day_01_input.txt"
+const val DAY_1_INPUT_FILENAME = "$INPUTS_DIR/day_01_input.txt"
 
 /**
  * [Day 1](https://adventofcode.com/2018/day/1) - part 1
@@ -54,6 +54,6 @@ fun <T> Sequence<T>.repeating(): Sequence<T> = sequence {
  * Part 2 => 241
  */
 fun main(args: Array<String>) {
-    println(findResultingFrequency(INPUT_FILE_DAY_1))
-    println(firstRepeatedFrequency(INPUT_FILE_DAY_1))
+    println(findResultingFrequency(DAY_1_INPUT_FILENAME))
+    println(firstRepeatedFrequency(DAY_1_INPUT_FILENAME))
 }
