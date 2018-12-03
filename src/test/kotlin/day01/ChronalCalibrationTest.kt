@@ -1,5 +1,6 @@
 package day01
 
+import day01.part2.findFirstRepeatedFrequency
 import org.junit.Test
 
 import org.junit.Assert.*

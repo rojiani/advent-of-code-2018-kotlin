@@ -1,20 +1,13 @@
-package day01
+package day01.part2
 
 import common.inputFilenameForDay
 import java.io.File
 
+
 private val DAY_1_INPUT_FILENAME = inputFilenameForDay(1)
 
 /**
- * [Day 1](https://adventofcode.com/2018/day/1) - part 1
- */
-fun findResultingFrequency(inputFilename: String): Int = File(inputFilename)
-    .useLines { lines ->
-        lines.sumBy { it.toInt() }
-    }
-
-/**
- * [Day 1](https://adventofcode.com/2018/day/1) - part 2
+ * [Day 1](https://adventofcode.com/2018/day/1) - Part 2
  */
 fun firstRepeatedFrequency(inputFilename: String): Int? {
     val freqChanges = File(inputFilename).useLines { lines ->
@@ -39,21 +32,18 @@ internal fun findFirstRepeatedFrequency(freqChanges: List<Int>): Int? {
         distinctFreqs += currentFreq
     }
 
-    return null     /* should never reach this line, but return type needed. */
+    error("Something went wrong, this line should never be reached.")
 }
 
+/**
+ * Generate an infinitely repeating sequence.
+ */
 fun <T> Sequence<T>.repeating(): Sequence<T> = sequence {
     while (true) {
         yieldAll(this@repeating)
     }
 }
 
-/**
- * Answers:
- * Part 1 => 592
- * Part 2 => 241
- */
 fun main(args: Array<String>) {
-    println(findResultingFrequency(DAY_1_INPUT_FILENAME))
-    println(firstRepeatedFrequency(DAY_1_INPUT_FILENAME))
+    println(firstRepeatedFrequency(DAY_1_INPUT_FILENAME))   // 241
 }
