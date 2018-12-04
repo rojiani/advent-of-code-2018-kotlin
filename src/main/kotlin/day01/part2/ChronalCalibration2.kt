@@ -7,32 +7,34 @@ import java.io.File
 private val DAY_1_INPUT_FILENAME = inputFilenameForDay(1)
 
 /**
- * [Day 1](https://adventofcode.com/2018/day/1) - Part 2
+ * [Day 1, Part 2](https://adventofcode.com/2018/day/1#part2)
  */
-fun firstRepeatedFrequency(inputFilename: String): Int? {
-    val freqChanges = File(inputFilename).useLines { lines ->
-        lines.map { it.toInt() }.toList()
+object Day1Part2 {
+    fun firstRepeatedFrequency(inputFilename: String): Int? {
+        val freqChanges = File(inputFilename).useLines { lines ->
+            lines.map { it.toInt() }.toList()
+        }
+        return findFirstRepeatedFrequency(freqChanges)
     }
-    return findFirstRepeatedFrequency(freqChanges)
-}
 
-internal fun findFirstRepeatedFrequency(freqChanges: List<Int>): Int? {
-    val distinctFreqs = hashSetOf(0)
-    var currentFreq = 0
+    internal fun findFirstRepeatedFrequency(freqChanges: List<Int>): Int? {
+        val distinctFreqs = hashSetOf(0)
+        var currentFreq = 0
 
-    val repeatingChanges: Sequence<Int> = freqChanges.asSequence().repeating()
+        val repeatingChanges: Sequence<Int> = freqChanges.asSequence().repeating()
 
-    repeatingChanges.forEach { freqChange ->
-        currentFreq += freqChange
+        repeatingChanges.forEach { freqChange ->
+            currentFreq += freqChange
 
-        if (currentFreq in distinctFreqs) {
-            return currentFreq
+            if (currentFreq in distinctFreqs) {
+                return currentFreq
+            }
+
+            distinctFreqs += currentFreq
         }
 
-        distinctFreqs += currentFreq
+        error("Something went wrong, this line should never be reached.")
     }
-
-    error("Something went wrong, this line should never be reached.")
 }
 
 /**
@@ -45,5 +47,5 @@ fun <T> Sequence<T>.repeating(): Sequence<T> = sequence {
 }
 
 fun main(args: Array<String>) {
-    println(firstRepeatedFrequency(DAY_1_INPUT_FILENAME))   // 241
+    println(Day1Part2.firstRepeatedFrequency(DAY_1_INPUT_FILENAME))   // 241
 }
