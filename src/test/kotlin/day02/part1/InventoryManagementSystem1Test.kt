@@ -1,9 +1,8 @@
-package day02.first
+package day02.part1
 
 import common.inputFilenameForDay
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class InventoryManagementSystem1Test {
 

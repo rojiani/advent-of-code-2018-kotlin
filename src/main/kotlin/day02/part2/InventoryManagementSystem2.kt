@@ -1,7 +1,6 @@
-package day02.second
+package day02.part2
 
 import common.inputFilenameForDay
-import day02.second.Day2Part2.findCommonIDLetters
 import java.io.File
 
 /**

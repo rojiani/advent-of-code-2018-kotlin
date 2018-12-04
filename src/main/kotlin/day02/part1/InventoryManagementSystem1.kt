@@ -1,4 +1,4 @@
-package day02.first
+package day02.part1
 
 import common.inputFilenameForDay
 import java.io.File

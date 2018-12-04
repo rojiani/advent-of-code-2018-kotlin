@@ -1,8 +1,8 @@
-package day02.second
+package day02.part2
 
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class InventoryManagementSystem2Test {
 
