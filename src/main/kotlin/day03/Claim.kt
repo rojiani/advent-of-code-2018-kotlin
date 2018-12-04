@@ -1,4 +1,4 @@
-package day03.part1
+package day03
 
 /** An elven claim for a portion of the chimney-squeeze fabric. */
 data class Claim(

@@ -1,8 +1,8 @@
-package day03.first
+package day03.part1
 
 import common.inputFilenameForDay
-import day03.part1.Claim
-import day03.part1.Rectangle
+import day03.Claim
+import day03.Rectangle
 import java.io.File
 
 const val FABRIC_LENGTH = 1000

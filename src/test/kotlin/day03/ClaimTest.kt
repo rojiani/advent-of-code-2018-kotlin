@@ -1,4 +1,4 @@
-package day03.part1
+package day03
 
 import common.inputFilenameForDay
 import org.junit.Assert.assertEquals

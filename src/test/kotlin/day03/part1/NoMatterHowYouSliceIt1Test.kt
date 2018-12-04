@@ -1,6 +1,6 @@
 package day03.part1
 
-import day03.first.Day3Part1
+import day03.Claim
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

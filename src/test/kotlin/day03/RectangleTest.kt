@@ -1,8 +1,7 @@
-package day03.part1
+package day03
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class RectangleTest {
 
