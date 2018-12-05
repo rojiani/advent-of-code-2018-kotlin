@@ -1,14 +1,13 @@
 package day01.part2
 
-import common.inputFilenameForDay
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ChronalCalibration2Test {
 
     @Test
-    fun firstRepeatedFrequency() {
-        assertEquals(241, Day1Part2.firstRepeatedFrequency(inputFilenameForDay(1)))
+    fun solve() {
+        assertEquals(241, Day1Part2.solve())
     }
     
     @Test

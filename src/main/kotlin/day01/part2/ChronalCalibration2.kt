@@ -10,16 +10,15 @@ private val DAY_1_INPUT_FILENAME = inputFilenameForDay(1)
  * [Day 1, Part 2](https://adventofcode.com/2018/day/1#part2)
  */
 object Day1Part2 {
-    fun firstRepeatedFrequency(inputFilename: String): Int? {
-        val freqChanges = File(inputFilename).useLines { lines ->
-            lines.map { it.toInt() }.toList()
-        }
+    fun solve(): Int? {
+        val freqChanges = File(DAY_1_INPUT_FILENAME).readLines().map { it.toInt() }
         return findFirstRepeatedFrequency(freqChanges)
     }
 
     internal fun findFirstRepeatedFrequency(freqChanges: List<Int>): Int? {
-        val distinctFreqs = hashSetOf(0)
+        val distinctFreqs = HashSet<Int>()
         var currentFreq = 0
+        distinctFreqs.add(currentFreq)
 
         val repeatingChanges: Sequence<Int> = freqChanges.asSequence().repeating()
 
@@ -47,5 +46,5 @@ fun <T> Sequence<T>.repeating(): Sequence<T> = sequence {
 }
 
 fun main(args: Array<String>) {
-    println(Day1Part2.firstRepeatedFrequency(DAY_1_INPUT_FILENAME))   // 241
+    println(Day1Part2.solve())
 }
