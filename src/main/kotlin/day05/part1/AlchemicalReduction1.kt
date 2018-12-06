@@ -11,6 +11,8 @@ private val DAY_5_INPUT_FILENAME = inputFilenameForDay(5)
 object Day5Part1 {
     fun solve() = alchemicallyReduce(readInput()).length
 
+    fun readInput(): String = File(DAY_5_INPUT_FILENAME).readLines().single()
+
     tailrec fun alchemicallyReduce(polymer: String, previousPolymer: String = ""): String = when {
         previousPolymer.length == polymer.length -> polymer
         else -> alchemicallyReduce(reduceAllNeighbors(polymer), polymer)
@@ -47,8 +49,6 @@ object Day5Part1 {
 
         toString()
     }
-
-    private fun readInput(): String = File(DAY_5_INPUT_FILENAME).readLines().single()
 
     private fun String.isReactivePair() = length == 2 && this[0].reactsWith(this[1])
 

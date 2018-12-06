@@ -4,7 +4,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 
-class Day5Part1Test {
+class AlchemicalReduction1Test {
 
     @Test
     fun solve() {

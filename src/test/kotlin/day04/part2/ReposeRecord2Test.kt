@@ -2,9 +2,8 @@ package day04.part2
 
 import day04.GuardLogEntry
 import day04.part1.Day4Part1
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class ReposeRecord2Test {
 
