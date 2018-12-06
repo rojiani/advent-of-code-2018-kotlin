@@ -17,16 +17,25 @@ object Day4Part1 {
     fun solve(): Int {
         /* Parse entries, convert to GuardLogEntry, sort by time, & fill in guardIDs
            to entries not associated with one. */
-        val entries = parseInputLogs()
-            .sortedBy { it.time }
-            .run(::addGuardIDs)
-
-        val entriesByID = entries.groupBy { it.guardID!! }
+        val entriesByID = groupInputByGuardID()
         val sleepiestGuardID = findSleepiestGuard(entriesByID)
         val minute = findMostSleptMinute(entriesByID[sleepiestGuardID]!!)
 
         return sleepiestGuardID * minute
     }
+
+    /**
+     * This method prepares the input to solve Part 1 & Part 2 by doing the following:
+     * 1. Read the entries in the input file
+     * 2. Creates a [GuardLogEntry] for each entry (i.e., each line)
+     * 3. Sorts the entries chronologically
+     * 4. Associates a Guard ID with each entry (cannot be done until sorted)
+     * 5. Groups the entries by Guard ID
+     */
+    internal fun groupInputByGuardID(): Map<Int, List<GuardLogEntry>> = parseInputLogs()
+        .sortedBy { it.time }
+        .run(::addGuardIDs)
+        .groupBy { it.guardID!! }
 
     /** Associate the proper guard IDs with entries with "falls asleep" and "wakes up" events */
     internal fun addGuardIDs(sortedEntries: List<GuardLogEntry>): List<GuardLogEntry> {
@@ -56,7 +65,6 @@ object Day4Part1 {
         return sleepTimes.maxBy { (_, totalTimeSlept) -> totalTimeSlept }!!.key
     }
 
-    // input: List of entries for the sleepiest guard.
     internal fun findMostSleptMinute(guardEntries: List<GuardLogEntry>): Int {
         require(guardEntries.isNotEmpty()) { "guardEntries must not be empty" }
 
@@ -78,7 +86,7 @@ object Day4Part1 {
     }
 
     /** Read the input file and create a [GuardLogEntry] for each line. */
-    internal fun parseInputLogs(): List<GuardLogEntry> = File(DAY_4_INPUT_FILENAME).readLines()
+    private fun parseInputLogs(): List<GuardLogEntry> = File(DAY_4_INPUT_FILENAME).readLines()
         .map { record -> GuardLogEntry.from(record) }
 
     // Note: in the input, every sleep event is followed by a wake event for the same guard

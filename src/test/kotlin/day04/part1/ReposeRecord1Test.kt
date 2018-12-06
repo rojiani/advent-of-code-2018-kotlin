@@ -26,7 +26,6 @@ class ReposeRecord1Test {
         "[1518-11-05 00:45] falls asleep",
         "[1518-11-05 00:55] wakes up"
     )
-
     private val sampleEntries: List<GuardLogEntry> = sampleRecords.map(GuardLogEntry.Companion::from)
     private val sampleSleepiestGuardID = 10
 
@@ -55,25 +54,18 @@ class ReposeRecord1Test {
 
     @Test
     fun `findSleepiestGuard - sample data`() {
-        val sampleEntriesWithIDs = Day4Part1.addGuardIDs(sampleEntries)
-        val sampleEntriesByID = sampleEntriesWithIDs.groupBy { it.guardID!! }
+        val sampleEntriesByID = Day4Part1.addGuardIDs(sampleEntries).groupBy { it.guardID!! }
         assertEquals(10, Day4Part1.findSleepiestGuard(sampleEntriesByID))
     }
 
     @Test
     fun `findSleepiestGuard - input file`() {
-        val entries = Day4Part1.addGuardIDs(
-            Day4Part1.parseInputLogs()
-                .sortedBy { it.time }
-            ).groupBy { it.guardID!! }
-
-        assertEquals(863, Day4Part1.findSleepiestGuard(entries))
+        assertEquals(863, Day4Part1.findSleepiestGuard(Day4Part1.groupInputByGuardID()))
     }
 
     @Test
     fun findMostSleptMinute() {
-        val sampleEntriesWithIDs = Day4Part1.addGuardIDs(sampleEntries)
-        val sampleEntriesByID = sampleEntriesWithIDs.groupBy { it.guardID!! }
+        val sampleEntriesByID = Day4Part1.addGuardIDs(sampleEntries).groupBy { it.guardID!! }
         val sleepiestGuardEntries = sampleEntriesByID[sampleSleepiestGuardID]!!
         assertEquals(24, Day4Part1.findMostSleptMinute(sleepiestGuardEntries))
     }
