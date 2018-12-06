@@ -14,39 +14,34 @@ private val DAY_4_INPUT_FILENAME = inputFilenameForDay(4)
  */
 object Day4Part1 {
 
-    fun solve() {
+    fun solve(): Int {
+        /* Parse entries, convert to GuardLogEntry, sort by time, & fill in guardIDs
+           to entries not associated with one. */
         val entries = parseInputLogs()
             .sortedBy { it.time }
             .run(::addGuardIDs)
 
-        val sleepiestGuardID = findSleepiestGuard(entries)
-        println("sleepiestGuardID: $sleepiestGuardID")
-        // TODO - calculate minute most slept
+        val entriesByID = entries.groupBy { it.guardID!! }
+        val sleepiestGuardID = findSleepiestGuard(entriesByID)
+        val minute = findMostSleptMinute(entriesByID[sleepiestGuardID]!!)
+
+        return sleepiestGuardID * minute
     }
 
     /** Associate the proper guard IDs with entries with "falls asleep" and "wakes up" events */
     internal fun addGuardIDs(sortedEntries: List<GuardLogEntry>): List<GuardLogEntry> {
-        requireNotNull(sortedEntries.first().guardID) {
-            "The first entry in a sorted list of entries should have a guardID"
-        }
-
-        var lastID: Int = sortedEntries.first().guardID!!
+        var currentGuardID: Int = sortedEntries.first().guardID!!
         return sortedEntries.map { entry ->
             if (entry.event == GuardAction.CHECK_IN) {
-                lastID = entry.guardID!!
+                currentGuardID = entry.guardID!!
             }
 
             if (entry.guardID != null) entry
-            else entry.copy(guardID = lastID)
+            else entry.copy(guardID = currentGuardID)
         }
     }
 
-    /**
-     * @param entries Sorted entries with all Guard IDs assigned
-     * @return The ID of the guard who slept the most total minutes.
-     */
-    internal fun findSleepiestGuard(entries: List<GuardLogEntry>): Int {
-        val entriesByID = entries.groupBy { it.guardID }
+    internal fun findSleepiestGuard(entriesByID: Map<Int, List<GuardLogEntry>>): Int {
         val sleepTimes: MutableMap<Int, Int> = HashMap()
         for ((id, entriesForID) in entriesByID) {
             var minsSlept = 0
@@ -55,12 +50,36 @@ object Day4Part1 {
                     minsSlept += minsSleptBetween(entriesForID[i].time, entriesForID[i + 1].time)
                 }
             }
-            sleepTimes[id!!] = minsSlept
+            sleepTimes[id] = minsSlept
         }
-        println(sleepTimes)
-        return sleepTimes.maxBy { (_, totalTimeSlept) -> totalTimeSlept }?.key
-            ?: error("Programming error calculating sleepiest guard")
+
+        return sleepTimes.maxBy { (_, totalTimeSlept) -> totalTimeSlept }!!.key
     }
+
+    // input: List of entries for the sleepiest guard.
+    internal fun findMostSleptMinute(guardEntries: List<GuardLogEntry>): Int {
+        require(guardEntries.isNotEmpty()) { "guardEntries must not be empty" }
+
+        val timesAsleepDuringMinute = IntArray(60)
+        guardEntries.forEachIndexed { i, entry ->
+            if (entry.event == GuardAction.FALLS_ASLEEP) {
+                val startMin = entry.time.minute
+                val endMin = guardEntries[i + 1].time.minute
+                (startMin until endMin).forEach { m ->
+                    timesAsleepDuringMinute[m]++
+                }
+            }
+        }
+
+        return timesAsleepDuringMinute.withIndex()
+            .maxBy { (_, timesAsleep) ->
+                timesAsleep
+            }!!.index
+    }
+
+    /** Read the input file and create a [GuardLogEntry] for each line. */
+    internal fun parseInputLogs(): List<GuardLogEntry> = File(DAY_4_INPUT_FILENAME).readLines()
+        .map { record -> GuardLogEntry.from(record) }
 
     // Note: in the input, every sleep event is followed by a wake event for the same guard
     private fun minsSleptBetween(sleepDateTime: LocalDateTime, wakeDateTime: LocalDateTime): Int =
@@ -69,11 +88,8 @@ object Day4Part1 {
             wakeDateTime.toLocalTime()
         ).toMinutes().toInt()
 
-    /** Read the input file and create a [GuardLogEntry] for each line. */
-    internal fun parseInputLogs(): List<GuardLogEntry> = File(DAY_4_INPUT_FILENAME).readLines()
-        .map { record -> GuardLogEntry.from(record) }
 }
 
 fun main(args: Array<String>) {
-    Day4Part1.solve()
+    println(Day4Part1.solve())
 }
